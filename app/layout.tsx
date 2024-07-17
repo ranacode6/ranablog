@@ -7,7 +7,11 @@ import Navbar from '@/components/Navbar';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'RanaBlog | Blog with sanity cms & nextjs',
+  metadataBase: new URL('https://ranablog.vercel.app/'),
+  title: {
+    default: 'RanaBlog | Blog with sanity cms & nextjs',
+    template: '%s | RanaBlog | Blog with sanity cms & nextjs',
+  },
   description:
     'RanaBlog offers professional coding problems solutions blog that explain complex topics in an easy-to-understand manner.',
   openGraph: {
@@ -16,6 +20,8 @@ export const metadata: Metadata = {
       'RanaBlog offers professional coding problems solutions blog that explain complex topics in an easy-to-understand manner.',
     type: 'website',
     locale: 'en-US',
+    url: 'https://ranablog.vercel.app',
+    siteName: 'RanaBlog',
   },
 };
 

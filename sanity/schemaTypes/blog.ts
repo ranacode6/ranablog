@@ -17,6 +17,12 @@ export default {
       },
     },
     {
+      name: 'publishedAt',
+      title: 'Published at',
+      type: 'datetime',
+      initialValue: () => new Date().toISOString(),
+    },
+    {
       name: 'titleImage',
       type: 'image',
       title: 'Title Image',

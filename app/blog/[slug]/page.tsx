@@ -5,11 +5,40 @@ import Image from 'next/image';
 
 export const revalidate = 30; // revalidate at most every 30 seconds
 
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: 'string' };
+}) {
+  const data: SingleBlog = await getData(params.slug);
+  if (!data) return;
+  return {
+    title: data.title,
+    description: data.smallDescription,
+    openGraph: {
+      title: data.title,
+      description: data.smallDescription,
+      type: 'website',
+      locale: 'en_US',
+      url: `https://ranablog.vercel.app/${params.slug}`,
+      siteName: 'RanaBlog',
+      images: [
+        {
+          url: urlFor(data.titleImage).width(1200).height(630).url(),
+          width: 1200,
+          height: 630,
+        },
+      ],
+    },
+  };
+}
+
 async function getData(slug: string) {
   const query = `
     *[_type == 'blog' && slug.current == '${slug}'] {
   "currentSlug": slug.current,
     title,
+    smallDescription,
     content,
     titleImage,
 }[0]
@@ -25,7 +54,6 @@ export default async function BlogSlug({
   params: { slug: string };
 }) {
   const data: SingleBlog = await getData(params.slug);
-  console.log(data);
 
   return (
     <div className="mt-8">
